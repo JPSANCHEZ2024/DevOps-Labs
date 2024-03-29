@@ -1,0 +1,8 @@
+---
+- name: use moapache role playbook
+  hosts: apacheservers
+  become: true
+
+  roles:
+    - role: moapache
+      system_manager: jpsanchez_2@hotmail.com

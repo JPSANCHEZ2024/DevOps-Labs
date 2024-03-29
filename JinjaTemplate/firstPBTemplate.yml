@@ -1,0 +1,17 @@
+- name: Playbook de test de templates
+  hosts: all
+  become_user: yes
+  vars:
+    var1: "Business Training !!!"
+    var2:
+      - { nom: "java", age: "40" }
+      - { nom: ".net", age: "22" }
+      - { nom: "python", age: "25" }  
+  tasks:
+    - name: template
+      template:
+        src: montemplate.txt.j2
+        dest: "/tmp/hello.txt"
+        backup: yes
+      with_items:
+        - "{{ var2 }}" 

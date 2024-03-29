@@ -1,0 +1,8 @@
+- name: Mon Playbook !!
+  hosts: Webservers
+  remote_user: vagrant
+  become_user: yes
+  tasks:
+    - debug:
+        msg:
+          -  "Hello World"

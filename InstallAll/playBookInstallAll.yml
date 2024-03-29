@@ -1,0 +1,79 @@
+- name: Ansible Playbook  to Install NGINX
+  hosts: Webservers # Target machine IP
+  become:  yes
+  tasks:
+    - name: "apt-get update"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: "install nginx"
+      apt:
+        name: ['nginx']
+        state: latest
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+---
+
+- name: Ansible Playbook to install Apache on Ubuntu
+  hosts: Apacheservers
+  become: yes
+  tasks:
+    - name: "apt-get update"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install latest version of Apache
+      apt:
+        name: apache2
+        update_cache: yes
+        state: latest
+
+    - name: Create document root for domain configured in host variable
+      file:
+        path: "/var/wwww/"
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: UFW firewall allow HTTP on port {{ http_port }}
+      ufw:
+        rule: allow
+        port: 80
+        proto: tcp
+
+  handlers:
+    - name: restart-apache
+      service:
+        name: apache2
+        state: restarted
+
+---
+
+- name: Ansible Playbook to Install MySQL
+  hosts: DBservers
+  become: yes
+  vars:
+    new_mysql_root_password: redacted
+    mysqlsoftware:
+      - mysql-server
+      - mysql-client
+  tasks:
+    - name: "apt-get update -y"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Install MySQL server
+      shell: apt-get -y install mysql-server
+
+    - name: Install MySQL client
+      shell: apt-get -y install mysql-client
+
+    - name: Start the MySQL service
+      action: service name=mysql state=started
+---

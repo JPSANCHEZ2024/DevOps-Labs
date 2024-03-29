@@ -1,0 +1,21 @@
+- name: Ansible Playbook to Install MySQL
+  hosts: DBservers
+  become: yes
+  vars:
+    new_mysql_root_password: redacted
+    mysqlsoftware:
+      - mysql-server
+      - mysql-client
+  tasks:
+    - name: "apt-get update -y"
+      apt: 
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Install MySQL server
+      shell: apt-get -y install mysql-server
+   
+    - name: Install MySQL client
+      shell: apt-get -y install mysql-client
+   
+    - name: Start the MySQL service
+      action: service name=mysql state=started  

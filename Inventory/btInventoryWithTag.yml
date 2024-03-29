@@ -1,0 +1,13 @@
+web_prod:
+  hosts:
+    webservers:
+      ansible_host: 172.16.1.51	  
+business_prod:
+  hosts:
+    apacheservers:
+      ansible_host: 172.16.1.52
+db_prod:
+  hosts:
+    dbservers:
+      ansible_host: 172.16.1.53
+

@@ -1,0 +1,6 @@
+---
+# tasks file for motd
+- name: copy motd file
+  template:
+     src: templates/motd.j2
+     dest: "/tmp/hello.txt"

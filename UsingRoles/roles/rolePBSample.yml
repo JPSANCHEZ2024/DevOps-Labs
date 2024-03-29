@@ -1,0 +1,8 @@
+---
+- name: use motd role playbook
+  hosts: all
+  become: true
+  
+  roles:
+    - role: motd
+      system_manager: jpsanchez_2@hotmail.com

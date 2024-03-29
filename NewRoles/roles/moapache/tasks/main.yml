@@ -1,0 +1,28 @@
+---
+# tasks file for moapache
+- name: Install web server
+  ansible.builtin.apt:
+    name: "apache2"
+    update_cache: yes
+    state: latest
+
+- name: Create document root for domain configured in host variable
+  file:
+    path: "/var/wwww/"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: UFW firewall allow HTTP on port {{ http_port }}
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+    
+- name: Start servcice apache2, if not started
+  ansible.builtin.service:
+    name: apache2
+    state: started
+    enabled: yes
+  

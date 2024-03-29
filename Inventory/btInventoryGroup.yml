@@ -1,0 +1,9 @@
+webservers:
+  hosts:
+    172.16.1.51:
+apacheservers:
+  hosts:
+    172.16.1.52:
+dbservers:
+  hosts:
+    172.16.1.53:
